@@ -7,7 +7,7 @@ import pygame
 import copy
 import time
 import math
-import orientations as os
+import orientations_v1 as os
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 nextpiecestested= []
