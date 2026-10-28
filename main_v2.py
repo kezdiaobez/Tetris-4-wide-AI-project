@@ -7,7 +7,7 @@ import pygame
 import copy
 import time
 import math
-import orientations_bitmasks as os
+import orientations_v2 as os
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
