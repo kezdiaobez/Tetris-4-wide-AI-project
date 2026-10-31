@@ -3,8 +3,6 @@ Tetris AI that plays on 4-wide board to maximize combo. WUMBOTIZE EVERYONE! This
 
 <img width="490" height="450" alt="giphy (3)" src="https://github.com/user-attachments/assets/5be57faa-1ca9-4da9-b49d-9750df699883" />
 
-<img width="489" height="450" alt="giphy (2)" src="https://github.com/user-attachments/assets/624f9455-949f-4661-a084-003c0fcbdcf0" />
-
 4 wide theory:
 The bot's gameplay requires an optimal board for massive 4 wide combos. An optimal 4 wide board usually involves 3 blocks per row, for all rows except the top 3 rows, and the total number of blocks in the top 3 rows need to add up to a multple of 3. At the start, the bot builds a board of this structure. Since there are 4 blocks in each piece, and the total number of blocks needs to be a multiple of 3 in order to be optimal, having 12 total blocks by placing 3 pieces reaches the optimal board the quickest. You will normally see pro 4-wide players(like wumbo) go for PC looping, but the 3-piece setup is most optimal for comboing.
 For comboing, a single line clear clears 4 blocks, and placing a piece adds 4 blocks. Single line clears are optimal because they do not change the number of blocks on the board, unless the total number of blocks is 24, 36, etc... In this case, the AI may choose clearing non-single lines that temporarily break the optimal board state, but transition back into it. The bot uses SRS kick tables to perform spins that kick pieces unusually into slots. This is a standard feature of modern tetris games.
