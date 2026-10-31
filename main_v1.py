@@ -7,7 +7,7 @@ import pygame
 import copy
 import time
 import math
-import orientations_v1 as os
+import orientations as os
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 nextpiecestested= []
@@ -893,7 +893,6 @@ while True:
     screen.fill((0, 0, 0))
     prev_combo=curr_combo
     piecesplaced+=1
-
 
 
 
