@@ -2,7 +2,6 @@ from collections import defaultdict, deque
 from collections import Counter
 import heapq
 import random
-import numpy as np
 import pygame
 import copy
 import time
