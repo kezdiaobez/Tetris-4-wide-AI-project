@@ -146,7 +146,6 @@ pieces3 = {"pieceL": os.piecesL2,
 colors = [(0, 0, 0), (255, 153, 51), (0, 0, 255), (0, 255, 255), (100, 255, 100), (255, 50, 50), (120, 0, 255), (255, 255, 100), (128, 128, 128)]
 
 def piece_row_masks(piece):
-    """Return {board_y: board-column bitmask} using precomputed local row masks."""
     masks = {}
     local_rows = piece_orientation_masks[piece.name][piece.spinpos % 4]
     anchor = len(piece.pos) // 2
@@ -162,7 +161,6 @@ def piece_row_masks(piece):
 
 
 def findlineclears(solutions, board, name):
-    """Return placements that complete at least one row (board is row bitmasks)."""
     clears = []
     for pos, x, y, spinpos in solutions:
         piece = Pieces(pos, name, x, y, spinpos)
@@ -251,11 +249,9 @@ class World:
             proj_combo, pieces_wasted, max_broken_combo, curr_combo = curr.evalstuff
             leafnodereached = curr.depth==maxdepth-1
             curr.value = self.expectimax_state(pieces_wasted, proj_combo, curr_combo, boardstate, max_broken_combo, leafnodereached)
-            #curr.value = self.evaluate_state(pieces_wasted, proj_combo, curr_combo, boardstate, max_broken_combo)
         return stuff
 
     def getboardinfo(self, board):
-        # counts remains the number of EMPTY cells per row, matching the original method.
         counts = [row.bit_count() for row in board]
         totalcount = sum(row.bit_count() for row in board)
         minheight = next((y for y, row in enumerate(board) if row), self.height)
@@ -298,7 +294,6 @@ class World:
 
     def board_state_eval(self, board, counts, totalcount, minheight):
         counts2 = counts
-        #print(counts)
         numgood = totalcount//3
         broken = False
         if(minheight<17):
@@ -309,7 +304,6 @@ class World:
         else:
             if((counts2[17]+counts2[18]+counts2[19])%3!=0):
                 broken = True
-        #print(listt)
         numgood = 4 if numgood > 4 else numgood
         boardstate = 4.5*numgood if not broken else -10
         return boardstate
@@ -317,7 +311,6 @@ class World:
     def board_state_eval2(self, board):
         counts, totalcount, minheight = self.getboardinfo(board)
         counts2 = counts
-        #print(counts)
         numgood = totalcount//3
         broken = False
         if(minheight<17):
@@ -328,7 +321,6 @@ class World:
         else:
             if((counts2[17]+counts2[18]+counts2[19])%3!=0):
                 broken = True
-        #print(listt)
         numgood = 4 if numgood > 4 else numgood
         var1 = 1000 * numgood if not broken else -100
         return var1, broken
@@ -356,8 +348,6 @@ class World:
                             for result in results:
                                 boards, holdpiecename, piecestested, boardstates = result
                                 for i in range(len(boards)):
-                                    #IMPORTANT: ASSUMES THAT TREE ONLY CONTAINS MOVES THAT CLEAR LINES
-                                    #def evaluate_state(self, pieces_wasted, proj_combo, curr_combo, boardstate, max_broken_combo):
                                     pieces_wasted, max_broken_combo = curr.evalstuff[1], curr.evalstuff[2]
                                     proj_combo = curr.evalstuff[0]+1
                                     curr_combo = curr.evalstuff[3]
@@ -435,15 +425,7 @@ class World:
                                 q.append(child)
                     toaddlist = []
                     ttable1 = {}
-        #print("length of leaves", len(leaves))
-        """
-        if(leaves):
-            leaf = leaves[0]
-            while leaf.parent!=None:
-                #proj combo, pieces wasted, max broken combo, curr combo
-                print("evalstuff", leaf.piecestested, "probability", leaf.probability, "type", leaf.type_)
-                leaf = leaf.parent
-        """
+
 
     def build_tree_util(self, curr, currentpiece, holdpiece, skippedpiece, ttable1, toaddlist):
         if(holdpiece is None):
@@ -472,7 +454,6 @@ class World:
                 curr.addmaxchild(child)
                 toaddlist.append(child)
                 boards.append(tempboard)
-        #NOT CACHED: PROBABILITY, PARENT, DEPTH, CANHOLD
         toadd = (boards, holdpiece.name, piecestested.copy(), boardstates)
         return toaddlist, toadd
 
@@ -635,7 +616,16 @@ class World:
         else:
             newqueue = piecesleft + nextpiecestaken
         return piecesleft, nextpiecesleft, nextpiecestaken, newqueue, name, piecestaken
-
+    """
+    def displayboard(self):
+        rect = pygame.Rect(self.centerx, self.centery, self.blockwidth*self.width, self.blockheight * self.height)
+        pygame.draw.rect(screen, (128, 128, 128), rect, 5)
+        for i, rowmask in enumerate(self.board):
+            for j in range(self.width):
+                if rowmask & (1 << j):
+                    # Occupancy-only bitboards do not retain individual piece colors.
+                    pygame.draw.rect(screen, colors[8], (self.centerx + j*self.blockwidth, self.centery + i*self.blockheight, self.blockwidth, self.blockheight))
+    """
     def displayboard(self, board):
         rect = pygame.Rect(self.centerx, self.centery, self.blockwidth*self.width, self.blockheight * self.height)
         pygame.draw.rect(screen, (128, 128, 128), rect, 5)
@@ -825,8 +815,6 @@ class Pieces:
 
 
     def iscolliding(self, tempboard):
-        # Coordinate data is still useful for strict wall/floor/ceiling bounds.
-        # Actual board-overlap checks use the precomputed orientation row masks.
         anchor = len(self.pos) // 2
         for x, y in pieces3[self.name][self.spinpos % 4]:
             board_x = self.x + x - anchor
