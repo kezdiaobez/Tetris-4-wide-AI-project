@@ -4,7 +4,7 @@ Tetris AI that plays on 4-wide board to maximize combo. WUMBOTIZE EVERYONE! This
 <img width="490" height="450" alt="giphy (3)" src="https://github.com/user-attachments/assets/5be57faa-1ca9-4da9-b49d-9750df699883" />
 
 Notes: I did not use any precomputed board states.
-The bot only knows the pieces that are in the queue, and keeps track of which bag of pieces it is on by counting the number of pieces placed(there are 7 pieces in each bag). Since the order of the pieces within the bag that have not been used yet are unknown(no cheating), the bot's expectimax tree has to test all orderings, there are a lot of identical states, which makes transposition tables an effective optimization.
+The bot only knows the pieces that are in the queue, and keeps track of which bag of pieces it is on by counting the number of pieces placed(there are 7 pieces in each bag). Since the order of the pieces within the bag that have not been used yet are unknown(no cheating), the bot's expectimax tree has to test all orderings. This gives a lot of identical states, which makes transposition tables an effective optimization.
 
 How it works: I used BFS to traverse known pieces and record the first move and the resulting game state after the first move, as well as each BFS game state at the cutoff depth. Then I constructed an expectimax tree from the BFS states for all possible orderings of the pieces remaining in the current bag. The expectimax algorithm evaluates these possibilities and selects the best BFS game state, which corresponds to the optimal first move(for the given search depth).
 BFS:
