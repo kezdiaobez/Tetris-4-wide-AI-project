@@ -8,11 +8,11 @@ The bot only knows the pieces that are in the queue, and keeps track of which ba
 
 How it works:
 BFS:
+<br>
 <img width="480" height="404" alt="Screenshot 2026-11-07 at 7 42 09 PM" src="https://github.com/user-attachments/assets/cff49dcc-cc01-4bb5-be3b-f246c89a4a11" />
 
 expectimax:
-[Untitled drawing.pdf](https://github.com/user-attachments/files/34536875/Untitled.drawing.pdf)
-
+<img width="960" height="720" alt="Untitled drawing" src="https://github.com/user-attachments/assets/7c4585c1-a973-414e-9a9b-19982817dcfa" />
 
 4 wide theory:
 The bot's gameplay requires an optimal board for massive 4 wide combos. An optimal 4 wide board usually involves 3 blocks per row, for all rows except the top 3 rows, and the total number of blocks in the top 3 rows need to add up to a multple of 3. Ideally, the board has 6 blocks or more. At the start, the bot builds a board of this structure. Since there are 4 blocks in each piece, and the total number of blocks needs to be a multiple of 3 in order to be optimal, having 12 total blocks by placing 3 pieces reaches the optimal board the quickest. You will normally see pro 4-wide players(like wumbo) go for PC looping, but the 3-piece setup is most optimal for comboing.
