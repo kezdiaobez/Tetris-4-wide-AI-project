@@ -11,7 +11,7 @@ BFS:
 <br>
 <img width="480" height="404" alt="Screenshot 2026-11-07 at 7 42 09 PM" src="https://github.com/user-attachments/assets/cff49dcc-cc01-4bb5-be3b-f246c89a4a11" />
 
-expectimax:
+expectimax tree construction:
 <img width="960" height="720" alt="Untitled drawing" src="https://github.com/user-attachments/assets/7c4585c1-a973-414e-9a9b-19982817dcfa" />
 
 4 wide theory:
